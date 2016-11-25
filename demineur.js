@@ -15,17 +15,15 @@ function Demineur(length, weigth){
 
 function displayDemineur(demi){
 	var divDemi = document.getElementById("demineur")
-	var divResult = document.createElement("div")
-	divResult.setAttribute("id", "result")
-	divDemi.appendChild(divResult)
+
 	for (var i = 0; i<demi.length; i++){
 		var divL = document.createElement("tr")
 		divL.setAttribute('id', "tab"+i)
 		divDemi.appendChild(divL)
 		for (var j = 0; j < demi.weigth; j++){
 			var divW = document.createElement("th")
-			divW.setAttribute('id', i+"-"+j)
-			divW.append(demi.table[i][j]) // Permet d'afficher la valeur
+			divW.setAttribute('id', "tab"+i+"-"+j)
+			//divW.append(demi.table[i][j]) // Permet d'afficher la valeur
 			var check = document.createElement("input")
 			check.setAttribute('type', 'checkbox')
 			check.setAttribute('checked', "checked")
@@ -39,6 +37,10 @@ function displayDemineur(demi){
 
 		}
 	}
+
+	var divResult = document.createElement("div")
+	divResult.setAttribute("id", "result")
+	divDemi.appendChild(divResult)
 }
 
 function checkMine(demi, l, w){
@@ -47,6 +49,8 @@ function checkMine(demi, l, w){
 		var divResult = document.getElementById("result")
 		console.log(divResult)
 		divResult.append("Perdu !")
+		replace(l, w, 'X')
+
 	}
 	/*
 	9 9 9 
@@ -62,9 +66,9 @@ function checkMine(demi, l, w){
 			if(w > 0 && demi.table[l-1][w-1])
 				cptMine++
 		}
-		if(l < demi.length && demi.table[l- -1][w]){
+		if(l < demi.length -1 && demi.table[l- -1][w]){
 			cptMine++
-			if(w < demi.weigth && demi.table[l- -1][w- -1])
+			if(w < demi.weigth -1 && demi.table[l- -1][w- -1])
 				cptMine++
 		}
 		if(w > 0 && demi.table[l][w-1]){
@@ -72,15 +76,23 @@ function checkMine(demi, l, w){
 			if(l > 0 && demi.table[l-1][w-1])
 				cptMine++
 		}
-		if(w < demi.weigth && demi.table[l][w- -1]){
+		if(w < demi.weigth -1 && demi.table[l][w- -1]){
 			console.log('')
 			cptMine++
-			if(l < demi.length && demi.table[l- -1][w- -1])
+			if(l < demi.length -1 && demi.table[l- -1][w- -1])
 				cptMine++
 		}
 		
 		console.log(cptMine)
+		replace(l, w, cptMine)
 	}
+}
+
+function replace(l, w, cptMine){
+	var divReplace = document.getElementById(l+"-"+w)
+	console.log(divReplace)
+	divReplace.replaceWith(cptMine)
+
 }
 var demi = new Demineur(10, 10)
 
